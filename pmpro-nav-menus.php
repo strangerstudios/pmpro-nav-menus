@@ -69,7 +69,7 @@ function register_my_members_menu() {
 		}
 	}
 }
-add_action( 'init', 'register_my_members_menu' );
+add_action( 'init', 'register_my_members_menu', 99 );
 
 function modify_nav_menu_args( $args )
 {
