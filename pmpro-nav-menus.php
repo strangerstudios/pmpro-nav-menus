@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Nav Menus Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-nav-menus/
 Description: Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
-Version: .1.2
+Version: .2
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -48,7 +48,7 @@ function pmpronm_pmpro_save_membership_level($level_id)
 add_action("pmpro_save_membership_level", "pmpronm_pmpro_save_membership_level");
 
 //register additional navigation menus
-function register_my_members_menu() {
+function pmpronm_register_my_members_menu() {
 	//make sure PMPro is activated
 	if(!function_exists('pmpro_getAllLevels'))
 		return;
@@ -69,9 +69,9 @@ function register_my_members_menu() {
 		}
 	}
 }
-add_action( 'init', 'register_my_members_menu', 99 );
+add_action( 'init', 'pmpronm_register_my_members_menu', 99 );
 
-function modify_nav_menu_args( $args )
+function pmpronm_modify_nav_menu_args( $args )
 {
 	//make sure PMPro is active
 	if(!function_exists('pmpro_hasMembershipLevel'))
@@ -106,7 +106,7 @@ function modify_nav_menu_args( $args )
 	}
 	return $args;
 }
-add_filter( 'wp_nav_menu_args', 'modify_nav_menu_args' );
+add_filter( 'wp_nav_menu_args', 'pmpronm_modify_nav_menu_args' );
 
 /*
 Function to add links to the plugin row meta
