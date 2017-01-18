@@ -3,10 +3,19 @@
 Plugin Name: Paid Memberships Pro - Nav Menus Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-nav-menus/
 Description: Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
-Version: .3
+Version: .3.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
+
+/** WP_Nav_Menu_Widget class */
+$path = dirname(__FILE__);
+require_once($path . "/widgets/class-pmpro-nav-menu-widget.php");
+
+function pmpro_nav_menus_widgets_init() {
+	register_widget('PMPro_Nav_Menu_Widget');
+}
+add_action( 'widgets_init', 'pmpro_nav_menus_widgets_init' );
 
 /*
 	Add checkbox to create custom navigation menu location for this level.
@@ -88,7 +97,7 @@ function pmpronm_modify_nav_menu_args( $args )
 	
 	//get all menus
 	$menus = get_registered_nav_menus();
-
+	
 	//reverse so level menus come first
 	$menus = array_reverse($menus);
 	
@@ -107,45 +116,6 @@ function pmpronm_modify_nav_menu_args( $args )
 	return $args;
 }
 add_filter( 'wp_nav_menu_args', 'pmpronm_modify_nav_menu_args' );
-
-
-function pmpronm_modify_widget_nav_menu_args( $nav_menu_args )
-{
-	//make sure PMPro is active
-	if(!function_exists('pmpro_hasMembershipLevel'))
-		return $nav_menu_args;
-	
-	//if not a member, return original
-	if(!pmpro_hasMembershipLevel())
-		return $nav_menu_args;
-	
-	//get current user's level id
-	global $current_user;
-	$level = pmpro_getMembershipLevelForUser($current_user->ID);
-	$level_id = $level->id;
-	
-	//get all menus
-	$menus = get_registered_nav_menus();
-
-	//reverse so level menus come first
-	$menus = array_reverse($menus);
-	
-	//look for a member version of this and swap it in
-	foreach ($menus as $location => $description)
-	{
-		if(($location == "members-" . $nav_menu_args['menu']->slug) && 
-				has_nav_menu("members-" . $args['theme_location']) ||
-			($location == "members-" . $level_id . "-" . $nav_menu_args['menu']->slug) && 
-				has_nav_menu("members-" . $level_id . "-" . $nav_menu_args['menu']->slug))
-		{
-			$nav_menu_args['menu'] = $location;
-			break;
-		}
-	}
-
-	return $nav_menu_args;
-}
-add_filter( 'widget_nav_menu_args', 'pmpronm_modify_widget_nav_menu_args' );
 
 /*
 Function to add links to the plugin row meta
