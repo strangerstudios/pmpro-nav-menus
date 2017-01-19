@@ -13,7 +13,7 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 	 */
 	function __construct() {
 		$widget_ops = array(
-			'classname' => 'pmpro_nav_menu_widget', 
+			'classname' => 'widget_nav_menu pmpro_nav_menu_widget', 
 			'description' => __( 'Add a membership-conditional menu to your sidebar.' ),
 			'customize_selective_refresh' => true,
 		);
@@ -179,12 +179,22 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 					<?php endforeach; ?>
 				</select>
 			</p>
-			<p class="pmpro_nav_menu_level_settings_trigger" style="text-align: center;"><a href="#show" style="cursor:pointer;">Click here to set menus for specific levels.</a></p>
-			<div class="pmpro_nav_menu_level_settings" style="display: none;">
 			<?php
 				$pmpro_levels = pmpro_getAllLevels(true, true);
 				if(!empty($pmpro_levels))
 				{
+					//check if we have settings for at least one level
+					$has_level_settings = false;
+					foreach($pmpro_levels as $level) {
+						if(!empty($instance['nav_menu_members_' . $level->id])) {
+							$has_level_settings = true;
+							break;
+						}
+					}
+				?>
+				<p class="pmpro_nav_menu_level_settings_trigger" style="text-align: center; <?php if($has_level_settings) {?>display: none;<?php } ?>"><a href="#show" style="cursor:pointer;">Click here to set menus for specific levels.</a></p>
+				<div class="pmpro_nav_menu_level_settings" <?php if(!$has_level_settings) {?>style="display: none;"<?php } ?>>
+				<?php
 					foreach($pmpro_levels as $level)
 					{
 						if(isset($instance['nav_menu_members_' . $level->id]))
@@ -205,16 +215,17 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 						</p>	
 						<?php
 					}
+				?>
+				</div>
+				<script>
+					jQuery('.pmpro_nav_menu_level_settings_trigger a').click(function() {
+						jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').hide();
+						jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').next('.pmpro_nav_menu_level_settings').show();
+					});
+				</script>
+				<?php
 				}
 			?>
-			</div>
-			<script>
-				jQuery('.pmpro_nav_menu_level_settings_trigger a').click(function() {
-					jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').hide();
-					jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').next('.pmpro_nav_menu_level_settings').show();
-				});
-			</script>
-			
 			<?php if ( $wp_customize instanceof WP_Customize_Manager ) : ?>
 				<p class="edit-selected-nav-menu" style="<?php if ( ! $nav_menu ) { echo 'display: none;'; } ?>">
 					<button type="button" class="button"><?php _e( 'Edit Menu' ) ?></button>
