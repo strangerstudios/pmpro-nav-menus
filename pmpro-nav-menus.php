@@ -120,18 +120,20 @@ function pmpronm_modify_nav_menu_args( $args )
 		}
 	}
 	
+	//check to see if current user has a level ID.
+	if( !empty( $level_id ) ){
 	//look for a member version of this and swap it in
-	foreach ($menus as $location => $description)
-	{
-		if(($location == "members-" . $args['theme_location']) && 
-				has_nav_menu("members-" . $args['theme_location']) ||
-			($location == "members-" . $level_id . "-" . $args['theme_location']) && 
-				has_nav_menu("members-" . $level_id . "-" . $args['theme_location']))
-		{	
-			$args['theme_location'] = $location;
-			break;
+		foreach ($menus as $location => $description)
+		{
+			if(($location == "members-" . $args['theme_location']) && 
+					has_nav_menu("members-" . $args['theme_location']) ||
+				($location == "members-" . $level_id . "-" . $args['theme_location']) && 
+					has_nav_menu("members-" . $level_id . "-" . $args['theme_location']))
+			{	
+				$args['theme_location'] = $location;
+				break;
+			}	
 		}
-		
 	}
 
 	return $args;
