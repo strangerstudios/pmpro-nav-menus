@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Nav Menus Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-nav-menus/
 Description: Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
-Version: .3.1
+Version: .3.2
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -147,7 +147,7 @@ function pmpronm_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-nav-menus.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-on-github/pmpro-nav-menus/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
 			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
