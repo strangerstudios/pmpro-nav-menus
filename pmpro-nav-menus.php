@@ -67,6 +67,9 @@ function pmpronm_register_my_members_menu() {
 	foreach ($menus as $location => $description)
 	{
 		register_nav_menu( 'members-' . $location, __( $description . ' - Members', $my_theme->get( 'Template') ) );
+
+		register_nav_menu( 'pmpro-non-members-' . $location, __( $description . ' - Logged-in Non-members', $my_theme->get( 'Template') ) );
+
 		$levels = pmpro_getAllLevels(true, true);
 		foreach($levels as $level)
 		{
@@ -86,9 +89,10 @@ function pmpronm_modify_nav_menu_args( $args )
 	if(!function_exists('pmpro_hasMembershipLevel'))
 		return $args;
 	
-	//if not a member, return original
-	if(!pmpro_hasMembershipLevel())
+	if( !is_user_logged_in() ){
 		return $args;
+	}
+	
 	
 	//get current user's level id
 	global $current_user;
@@ -100,19 +104,38 @@ function pmpronm_modify_nav_menu_args( $args )
 	
 	//reverse so level menus come first
 	$menus = array_reverse($menus);
-	
-	//look for a member version of this and swap it in
-	foreach ($menus as $location => $description)
-	{
-		if(($location == "members-" . $args['theme_location']) && 
-				has_nav_menu("members-" . $args['theme_location']) ||
-			($location == "members-" . $level_id . "-" . $args['theme_location']) && 
-				has_nav_menu("members-" . $level_id . "-" . $args['theme_location']))
+
+	//for logged in non-members
+	if( is_user_logged_in() && !pmpro_hasMembershipLevel() ){
+		//let's replace with certain menu
+		foreach ($menus as $location => $description)
 		{
-			$args['theme_location'] = $location;
-			break;
+			if(($location == "pmpro-non-members-" . $args['theme_location']) && 
+					has_nav_menu("pmpro-non-members-" . $args['theme_location']) )
+			{	
+				$args['theme_location'] = $location;
+				break;
+			}
+		
 		}
 	}
+	
+	//check to see if current user has a level ID.
+	if( !empty( $level_id ) ){
+	//look for a member version of this and swap it in
+		foreach ($menus as $location => $description)
+		{
+			if(($location == "members-" . $args['theme_location']) && 
+					has_nav_menu("members-" . $args['theme_location']) ||
+				($location == "members-" . $level_id . "-" . $args['theme_location']) && 
+					has_nav_menu("members-" . $level_id . "-" . $args['theme_location']))
+			{	
+				$args['theme_location'] = $location;
+				break;
+			}	
+		}
+	}
+
 	return $args;
 }
 add_filter( 'wp_nav_menu_args', 'pmpronm_modify_nav_menu_args' );
