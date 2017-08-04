@@ -5,7 +5,7 @@ Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/
 Description: Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
 Version: .3.2
 Author: Stranger Studios
-Author URI: http://www.strangerstudios.com
+Author URI: https://www.paidmembershipspro.com
 */
 
 /** WP_Nav_Menu_Widget class */
