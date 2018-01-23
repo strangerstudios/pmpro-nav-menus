@@ -22,10 +22,10 @@ add_action( 'widgets_init', 'pmpro_nav_menus_widgets_init' );
 */
 //show the checkbox on the edit level page
 function pmpronm_pmpro_membership_level_after_other_settings()
-{	
+{
 	$level_id = intval($_REQUEST['edit']);
 	if($level_id > 0)
-		$pmpro_nav_menu = get_option('pmpro_nav_menu_hidden_level_' . $level_id);	
+		$pmpro_nav_menu = get_option('pmpro_nav_menu_hidden_level_' . $level_id);
 	else
 		$pmpro_nav_menu = false;
 ?>
@@ -88,20 +88,21 @@ function pmpronm_modify_nav_menu_args( $args )
 	//make sure PMPro is active
 	if(!function_exists('pmpro_hasMembershipLevel'))
 		return $args;
-	
+
 	if( !is_user_logged_in() ){
 		return $args;
 	}
-	
-	
+
+
 	//get current user's level id
 	global $current_user;
 	$level = pmpro_getMembershipLevelForUser($current_user->ID);
-	$level_id = $level->id;
-	
+	if ( null !== $level ) {
+	    $level_id = $level->id;
+  }
 	//get all menus
 	$menus = get_registered_nav_menus();
-	
+
 	//reverse so level menus come first
 	$menus = array_reverse($menus);
 
@@ -110,29 +111,29 @@ function pmpronm_modify_nav_menu_args( $args )
 		//let's replace with certain menu
 		foreach ($menus as $location => $description)
 		{
-			if(($location == "pmpro-non-members-" . $args['theme_location']) && 
+			if(($location == "pmpro-non-members-" . $args['theme_location']) &&
 					has_nav_menu("pmpro-non-members-" . $args['theme_location']) )
-			{	
+			{
 				$args['theme_location'] = $location;
 				break;
 			}
-		
+
 		}
 	}
-	
+
 	//check to see if current user has a level ID.
 	if( !empty( $level_id ) ){
 	//look for a member version of this and swap it in
 		foreach ($menus as $location => $description)
 		{
-			if(($location == "members-" . $args['theme_location']) && 
+			if(($location == "members-" . $args['theme_location']) &&
 					has_nav_menu("members-" . $args['theme_location']) ||
-				($location == "members-" . $level_id . "-" . $args['theme_location']) && 
+				($location == "members-" . $level_id . "-" . $args['theme_location']) &&
 					has_nav_menu("members-" . $level_id . "-" . $args['theme_location']))
-			{	
+			{
 				$args['theme_location'] = $location;
 				break;
-			}	
+			}
 		}
 	}
 
