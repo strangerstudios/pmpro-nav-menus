@@ -1,7 +1,7 @@
 <?php
 /**
  * Widget API: PMPro_Nav_Menu_Widget class
-*/
+ */
 
 /**
  * Class used to implement the PMPro - Custom Members Menu widget.
@@ -13,11 +13,11 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 	 */
 	function __construct() {
 		$widget_ops = array(
-			'classname' => 'widget_nav_menu pmpro_nav_menu_widget', 
+			'classname' => 'widget_nav_menu pmpro_nav_menu_widget',
 			'description' => __( 'Add a membership-conditional menu to your sidebar.' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'pmpro_nav_menu_widget', __('PMPro - Custom Membership Menu'), $widget_ops );
+		parent::__construct( 'pmpro_nav_menu_widget', __( 'PMPro - Custom Membership Menu' ), $widget_ops );
 	}
 
 	/**
@@ -30,41 +30,41 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		// Get menu
 		global $current_user;
-		$level = pmpro_getMembershipLevelForUser($current_user->ID);
-		if(!empty($level))
-		{
-			//The user is a member. Show the members nav menu.
-			if(!empty($instance['nav_menu_members_' . $level->id]))
-				$nav_menu = wp_get_nav_menu_object($instance['nav_menu_members_' . $level->id]);
-			elseif(!empty($instance['nav_menu_members']))
-				$nav_menu = wp_get_nav_menu_object($instance['nav_menu_members']);				
-			elseif(!empty($instance['nav_menu']))
-				$nav_menu = wp_get_nav_menu_object($instance['nav_menu']);
-			else
+		$level = pmpro_getMembershipLevelForUser( $current_user->ID );
+		if ( ! empty( $level ) ) {
+			// The user is a member. Show the members nav menu.
+			if ( ! empty( $instance[ 'nav_menu_members_' . $level->id ] ) ) {
+				$nav_menu = wp_get_nav_menu_object( $instance[ 'nav_menu_members_' . $level->id ] );
+			} elseif ( ! empty( $instance['nav_menu_members'] ) ) {
+				$nav_menu = wp_get_nav_menu_object( $instance['nav_menu_members'] );
+			} elseif ( ! empty( $instance['nav_menu'] ) ) {
+				$nav_menu = wp_get_nav_menu_object( $instance['nav_menu'] );
+			} else {
 				$nav_menu = false;
-		}
-		elseif( is_user_logged_in() && !pmpro_hasMembershipLevel() )
-		{
+			}
+		} elseif ( is_user_logged_in() && ! pmpro_hasMembershipLevel() ) {
 			$nav_menu = ! empty( $instance['nav_menu_non_members'] ) ? wp_get_nav_menu_object( $instance['nav_menu_non_members'] ) : '';
-		}else{
-			//The user / visitor is not a member. Show the default nav menu.
+		} else {
+			// The user / visitor is not a member. Show the default nav menu.
 			$nav_menu = ! empty( $instance['nav_menu'] ) ? wp_get_nav_menu_object( $instance['nav_menu'] ) : false;
 		}
 
-		if ( !$nav_menu )
+		if ( ! $nav_menu ) {
 			return;
+		}
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
 		echo $args['before_widget'];
 
-		if ( !empty($instance['title']) )
+		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . $instance['title'] . $args['after_title'];
+		}
 
 		$nav_menu_args = array(
 			'fallback_cb' => '',
-			'menu'        => $nav_menu
+			'menu'        => $nav_menu,
 		);
 
 		/**
@@ -98,7 +98,7 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
-		
+
 		if ( ! empty( $new_instance['title'] ) ) {
 			$instance['title'] = sanitize_text_field( $new_instance['title'] );
 		}
@@ -111,19 +111,17 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 		if ( ! empty( $new_instance['nav_menu_non_members'] ) ) {
 			$instance['nav_menu_non_members'] = (int) $new_instance['nav_menu_non_members'];
 		}
-		
-		//update all nav menus for specific membership levels
-		$pmpro_levels = pmpro_getAllLevels(true, true);
-		if(!empty($pmpro_levels))
-		{
-			foreach($pmpro_levels as $level)
-			{
-				if ( ! empty( $new_instance['nav_menu_members_' . $level->id] ) ) {
-					$instance['nav_menu_members_' . $level->id] = (int) $new_instance['nav_menu_members_' . $level->id];
+
+		// update all nav menus for specific membership levels
+		$pmpro_levels = pmpro_getAllLevels( true, true );
+		if ( ! empty( $pmpro_levels ) ) {
+			foreach ( $pmpro_levels as $level ) {
+				if ( ! empty( $new_instance[ 'nav_menu_members_' . $level->id ] ) ) {
+					$instance[ 'nav_menu_members_' . $level->id ] = (int) $new_instance[ 'nav_menu_members_' . $level->id ];
 				}
 			}
 		}
-		
+
 		return $instance;
 	}
 
@@ -143,16 +141,17 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 		$nav_menu_members = isset( $instance['nav_menu_members'] ) ? $instance['nav_menu_members'] : '';
 		$nav_menu_non_members = isset( $instance['nav_menu_non_members'] ) ? $instance['nav_menu_non_members'] : '';
 
-	
-
-
 		// Get menus
 		$menus = wp_get_nav_menus();
 
-
 		// If no menus exists, direct the user to go and create some.
 		?>
-		<p class="nav-menu-widget-no-menus-message" <?php if ( ! empty( $menus ) ) { echo ' style="display:none" '; } ?>>
+		<p class="nav-menu-widget-no-menus-message" 
+		<?php
+		if ( ! empty( $menus ) ) {
+			echo ' style="display:none" '; }
+?>
+>
 			<?php
 			if ( $wp_customize instanceof WP_Customize_Manager ) {
 				$url = 'javascript: wp.customize.panel( "nav_menus" ).focus();';
@@ -162,9 +161,14 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 			?>
 			<?php echo sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), esc_attr( $url ) ); ?>
 		</p>
-		<div class="nav-menu-widget-form-controls" <?php if ( empty( $menus ) ) { echo ' style="display:none" '; } ?>>
+		<div class="nav-menu-widget-form-controls" 
+		<?php
+		if ( empty( $menus ) ) {
+			echo ' style="display:none" '; }
+?>
+>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ) ?></label>
+				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 				<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
 			</p>
 			<p>
@@ -203,57 +207,68 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 
 			<?php
 
-				$pmpro_levels = pmpro_getAllLevels(true, true);
-				if(!empty($pmpro_levels))
-				{
-					//check if we have settings for at least one level
-					$has_level_settings = false;
-					foreach($pmpro_levels as $level) {
-						if(!empty($instance['nav_menu_members_' . $level->id])) {
-							$has_level_settings = true;
-							break;
-						}
+				$pmpro_levels = pmpro_getAllLevels( true, true );
+			if ( ! empty( $pmpro_levels ) ) {
+				// check if we have settings for at least one level
+				$has_level_settings = false;
+				foreach ( $pmpro_levels as $level ) {
+					if ( ! empty( $instance[ 'nav_menu_members_' . $level->id ] ) ) {
+						$has_level_settings = true;
+						break;
 					}
-
+				}
 
 				?>
-				<p class="pmpro_nav_menu_level_settings_trigger" style="text-align: center; <?php if($has_level_settings) {?>display: none;<?php } ?>"><a href="#show" style="cursor:pointer;">Click here to set menus for specific levels.</a></p>
-				<div class="pmpro_nav_menu_level_settings" <?php if(!$has_level_settings) {?>style="display: none;"<?php } ?>>
+				<p class="pmpro_nav_menu_level_settings_trigger" style="text-align: center; 
 				<?php
-					foreach($pmpro_levels as $level)
-					{
-						if(isset($instance['nav_menu_members_' . $level->id]))
-							$selected_menu = $instance['nav_menu_members_' . $level->id];
-						else
-							$selected_menu = false;
-						?>
-						<p>
-							<label for="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id); ?>"><?php echo sprintf( '%s Menu:', $level->name ); ?></label>
-							<select id="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_members_' . $level->id ); ?>">
-								<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
-								<?php foreach ( $menus as $menu ) : ?>
+				if ( $has_level_settings ) {
+	?>
+ display: none;<?php } ?>"><a href="#show" style="cursor:pointer;">Click here to set menus for specific levels.</a></p>
+				<div class="pmpro_nav_menu_level_settings" 
+				<?php
+				if ( ! $has_level_settings ) {
+	?>
+ style="display: none;"<?php } ?>>
+				<?php
+				foreach ( $pmpro_levels as $level ) {
+					if ( isset( $instance[ 'nav_menu_members_' . $level->id ] ) ) {
+						$selected_menu = $instance[ 'nav_menu_members_' . $level->id ];
+					} else {
+						$selected_menu = false;
+					}
+					?>
+					<p>
+						<label for="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id ); ?>"><?php echo sprintf( '%s Menu:', $level->name ); ?></label>
+						<select id="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_members_' . $level->id ); ?>">
+							<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+							<?php foreach ( $menus as $menu ) : ?>
 									<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $selected_menu, $menu->term_id ); ?>>
 										<?php echo esc_html( $menu->name ); ?>
 									</option>
 								<?php endforeach; ?>
-							</select>
+						</select>
 						</p>	
 						<?php
-					}
+				}
 				?>
 				</div>
 				<script>
-					jQuery('.pmpro_nav_menu_level_settings_trigger a').click(function() {
-						jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').hide();
-						jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').next('.pmpro_nav_menu_level_settings').show();
-					});
+				jQuery('.pmpro_nav_menu_level_settings_trigger a').click(function() {
+					jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').hide();
+					jQuery(this).closest('.pmpro_nav_menu_level_settings_trigger').next('.pmpro_nav_menu_level_settings').show();
+				});
 				</script>
 				<?php
-				}
+			}
 			?>
 			<?php if ( $wp_customize instanceof WP_Customize_Manager ) : ?>
-				<p class="edit-selected-nav-menu" style="<?php if ( ! $nav_menu ) { echo 'display: none;'; } ?>">
-					<button type="button" class="button"><?php _e( 'Edit Menu' ) ?></button>
+				<p class="edit-selected-nav-menu" style="
+				<?php
+				if ( ! $nav_menu ) {
+					echo 'display: none;'; }
+?>
+">
+					<button type="button" class="button"><?php _e( 'Edit Menu' ); ?></button>
 				</p>
 			<?php endif; ?>
 		</div>
