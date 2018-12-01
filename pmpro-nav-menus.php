@@ -97,6 +97,12 @@ function pmpronm_modify_nav_menu_args( $args )
 	//get current user's level id
 	global $current_user;
 	$level = pmpro_getMembershipLevelForUser($current_user->ID);
+	
+	// Is logged in, but not an active member
+	if ( empty( $level ) ) {
+		return $args;
+	}
+	
 	$level_id = $level->id;
 	
 	//get all menus
