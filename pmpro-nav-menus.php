@@ -94,51 +94,46 @@ function pmpronm_modify_nav_menu_args( $args )
 	}
 	
 	
-	//get current user's level id
+	//get current user's level ids
 	global $current_user;
-	$level = pmpro_getMembershipLevelForUser($current_user->ID);
-	
-	// Is logged in, but not an active member
-	if ( empty( $level ) ) {
-		return $args;
-	}
-	
-	$level_id = $level->id;
-	
-	//get all menus
-	$menus = get_registered_nav_menus();
-	
-	//reverse so level menus come first
-	$menus = array_reverse($menus);
+	$levels = pmpro_getMembershipLevelsForUser($current_user->ID);
+	$level_ids = array_map( function( $level ) { return $level->id; }, $levels );
 
-	//for logged in non-members
-	if( is_user_logged_in() && !pmpro_hasMembershipLevel() ){
-		//let's replace with certain menu
-		foreach ($menus as $location => $description)
-		{
-			if(($location == "pmpro-non-members-" . $args['theme_location']) && 
-					has_nav_menu("pmpro-non-members-" . $args['theme_location']) )
-			{	
-				$args['theme_location'] = $location;
-				break;
-			}
-		
+	// For logged in non-members...
+	if( is_user_logged_in() && empty( $level_ids ) ) {
+		// Give non-member menu.
+		if ( has_nav_menu( "pmpro-non-members-" . $args['theme_location'] ) ) {
+			$args['theme_location'] = $location;
 		}
 	}
-	
-	//check to see if current user has a level ID.
-	if( !empty( $level_id ) ){
-	//look for a member version of this and swap it in
-		foreach ($menus as $location => $description)
-		{
-			if(($location == "members-" . $args['theme_location']) && 
-					has_nav_menu("members-" . $args['theme_location']) ||
-				($location == "members-" . $level_id . "-" . $args['theme_location']) && 
-					has_nav_menu("members-" . $level_id . "-" . $args['theme_location']))
-			{	
-				$args['theme_location'] = $location;
+
+	// Find menu for membership ID, or give membership menu...
+	if ( ! empty( $level_ids ) ) {
+		$found_menu = false;
+
+		// Search for memu for prioritized levels.
+		$prioritized_levels = apply_filters( 'pmpronm_prioritize_levels', array() );
+		foreach ( $prioritized_levels as $prioritized_level_id ) {
+			if ( in_array( $prioritized_level_id, $level_ids ) && has_nav_menu("members-" . $prioritized_level_id . "-" . $args['theme_location']) ) {
+				$args['theme_location'] = "members-" . $prioritized_level_id . "-" . $args['theme_location'];
+				$found_menu = true;
 				break;
-			}	
+			}
+		}
+
+		if ( ! $found_menu ) {
+			// Search for memu for user's other levels.
+			$other_levels = array_diff( $level_ids, $prioritized_levels );
+			foreach ( $other_levels as $other_level_id ) {
+				if ( has_nav_menu("members-" . $other_level_id . "-" . $args['theme_location']) ) {
+					$args['theme_location'] = "members-" . $other_level_id . "-" . $args['theme_location'];
+					$found_menu = true;
+				}
+			}
+		}
+
+		if ( ! $found_menu && has_nav_menu( 'members-' . $args['theme_location'] ) ) {
+			$args['theme_location'] = 'members-' . $args['theme_location'];
 		}
 	}
 
