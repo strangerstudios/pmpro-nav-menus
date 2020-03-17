@@ -103,7 +103,7 @@ function pmpronm_modify_nav_menu_args( $args )
 	if( is_user_logged_in() && empty( $level_ids ) ) {
 		// Give non-member menu.
 		if ( has_nav_menu( "pmpro-non-members-" . $args['theme_location'] ) ) {
-			$args['theme_location'] = $location;
+			$args['theme_location'] = "pmpro-non-members-" . $args['theme_location'];
 		}
 	}
 
