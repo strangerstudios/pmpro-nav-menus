@@ -8,11 +8,14 @@ Author: Stranger Studios
 Author URI: https://www.paidmembershipspro.com
 */
 
-/** WP_Nav_Menu_Widget class */
-$path = dirname(__FILE__);
-require_once($path . "/widgets/class-pmpro-nav-menu-widget.php");
-
 function pmpro_nav_menus_widgets_init() {
+	// Make sure PMPro is activated.
+	if ( ! function_exists( 'pmpro_getAllLevels' ) ) {
+		return;
+	}
+	/** WP_Nav_Menu_Widget class */
+	$path = dirname(__FILE__);
+	require_once($path . "/widgets/class-pmpro-nav-menu-widget.php");
 	register_widget('PMPro_Nav_Menu_Widget');
 }
 add_action( 'widgets_init', 'pmpro_nav_menus_widgets_init' );
