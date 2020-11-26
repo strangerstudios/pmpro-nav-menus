@@ -1,0 +1,94 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Paid Memberships Pro - Nav Menus Add On\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-26 15:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.4.6; wp-5.5.3"
+
+#: pmpro-nav-menus.php:86
+msgid " Members"
+msgstr ""
+
+#: widgets/class-pmpro-nav-menu-widget.php:173
+#: widgets/class-pmpro-nav-menu-widget.php:184
+#: widgets/class-pmpro-nav-menu-widget.php:195
+#: widgets/class-pmpro-nav-menu-widget.php:233
+msgid "&mdash; Select &mdash;"
+msgstr ""
+
+#: pmpro-nav-menus.php:46
+msgid ""
+"Check this if you want to create unique navigation menus for this level."
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Creates member navigation menus and swaps your theme's navigation based on a "
+"user's Membership Level"
+msgstr ""
+
+#: pmpro-nav-menus.php:43
+msgid "Custom Menu:"
+msgstr ""
+
+#: widgets/class-pmpro-nav-menu-widget.php:171
+msgid "Default Menu:"
+msgstr ""
+
+#: pmpro-nav-menus.php:158
+msgid "Docs"
+msgstr ""
+
+#: widgets/class-pmpro-nav-menu-widget.php:256
+msgid "Edit Menu"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.paidmembershipspro.com"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/"
+msgstr ""
+
+#: widgets/class-pmpro-nav-menu-widget.php:193
+msgid "Logged-in Non-member Menu:"
+msgstr ""
+
+#: widgets/class-pmpro-nav-menu-widget.php:182
+msgid "Members Menu:"
+msgstr ""
+
+#. Name of the plugin
+msgid "Paid Memberships Pro - Nav Menus Add On"
+msgstr ""
+
+#. Author of the plugin
+msgid "Stranger Studios"
+msgstr ""
+
+#: pmpro-nav-menus.php:159
+msgid "Support"
+msgstr ""
+
+#: widgets/class-pmpro-nav-menu-widget.php:167
+msgid "Title:"
+msgstr ""
+
+#: pmpro-nav-menus.php:158
+msgid "View Documentation"
+msgstr ""
+
+#: pmpro-nav-menus.php:159
+msgid "Visit Customer Support Forum"
+msgstr ""
