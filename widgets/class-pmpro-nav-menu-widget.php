@@ -164,13 +164,13 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 		</p>
 		<div class="nav-menu-widget-form-controls" <?php if ( empty( $menus ) ) { echo ' style="display:none" '; } ?>>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ) ?></label>
+				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'pmpro-nav-menus' ) ?></label>
 				<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_menu' ); ?>"><?php _e( 'Default Menu:' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'nav_menu' ); ?>"><?php _e( 'Default Menu:', 'pmpro-nav-menus' ); ?></label>
 				<select id="<?php echo $this->get_field_id( 'nav_menu' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu' ); ?>">
-					<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+					<option value="0"><?php _e( '&mdash; Select &mdash;', 'pmpro-nav-menus' ); ?></option>
 					<?php foreach ( $menus as $menu ) : ?>
 						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu, $menu->term_id ); ?>>
 							<?php echo esc_html( $menu->name ); ?>
@@ -179,9 +179,9 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 				</select>
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_menu_members' ); ?>"><?php _e( 'Members Menu:' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'nav_menu_members' ); ?>"><?php _e( 'Members Menu:', 'pmpro-nav-menus' ); ?></label>
 				<select id="<?php echo $this->get_field_id( 'nav_menu_members' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_members' ); ?>">
-					<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+					<option value="0"><?php _e( '&mdash; Select &mdash;', 'pmpro-nav-menus' ); ?></option>
 					<?php foreach ( $menus as $menu ) : ?>
 						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu_members, $menu->term_id ); ?>>
 							<?php echo esc_html( $menu->name ); ?>
@@ -190,9 +190,9 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 				</select>
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_menu_non_members' ); ?>"><?php _e( 'Logged-in Non-member Menu:' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'nav_menu_non_members' ); ?>"><?php _e( 'Logged-in Non-member Menu:', 'pmpro-nav-menus' ); ?></label>
 				<select id="<?php echo $this->get_field_id( 'nav_menu_non_members' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_non_members' ); ?>">
-					<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+					<option value="0"><?php _e( '&mdash; Select &mdash;', 'pmpro-nav-menus' ); ?></option>
 					<?php foreach ( $menus as $menu ) : ?>
 						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu_non_members, $menu->term_id ); ?>>
 							<?php echo esc_html( $menu->name ); ?>
@@ -230,7 +230,7 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 						<p>
 							<label for="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id); ?>"><?php echo sprintf( '%s Menu:', $level->name ); ?></label>
 							<select id="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_members_' . $level->id ); ?>">
-								<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+								<option value="0"><?php _e( '&mdash; Select &mdash;', 'pmpro-nav-menus' ); ?></option>
 								<?php foreach ( $menus as $menu ) : ?>
 									<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $selected_menu, $menu->term_id ); ?>>
 										<?php echo esc_html( $menu->name ); ?>
@@ -253,7 +253,7 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 			?>
 			<?php if ( $wp_customize instanceof WP_Customize_Manager ) : ?>
 				<p class="edit-selected-nav-menu" style="<?php if ( ! $nav_menu ) { echo 'display: none;'; } ?>">
-					<button type="button" class="button"><?php _e( 'Edit Menu' ) ?></button>
+					<button type="button" class="button"><?php _e( 'Edit Menu', 'pmpro-nav-menus' ) ?></button>
 				</p>
 			<?php endif; ?>
 		</div>
