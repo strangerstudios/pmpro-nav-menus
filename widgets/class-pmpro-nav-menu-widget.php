@@ -30,28 +30,45 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		// Get menu
 		global $current_user;
-		$level = pmpro_getMembershipLevelForUser($current_user->ID);
-		if(!empty($level))
-		{
-			//The user is a member. Show the members nav menu.
-			if(!empty($instance['nav_menu_members_' . $level->id]))
-				$nav_menu = wp_get_nav_menu_object($instance['nav_menu_members_' . $level->id]);
-			elseif(!empty($instance['nav_menu_members']))
-				$nav_menu = wp_get_nav_menu_object($instance['nav_menu_members']);				
-			elseif(!empty($instance['nav_menu']))
-				$nav_menu = wp_get_nav_menu_object($instance['nav_menu']);
-			else
-				$nav_menu = false;
-		}
-		elseif( is_user_logged_in() && !pmpro_hasMembershipLevel() )
-		{
-			$nav_menu = ! empty( $instance['nav_menu_non_members'] ) ? wp_get_nav_menu_object( $instance['nav_menu_non_members'] ) : '';
-		}else{
-			//The user / visitor is not a member. Show the default nav menu.
-			$nav_menu = ! empty( $instance['nav_menu'] ) ? wp_get_nav_menu_object( $instance['nav_menu'] ) : false;
+		$levels = pmpro_getMembershipLevelsForUser($current_user->ID);
+		$level_ids = wp_list_pluck( $levels, 'id' );
+
+		// For logged in non-members...
+		if( is_user_logged_in() && empty( $level_ids ) && ! empty( $instance['nav_menu_non_members'] ) ) {
+			// Give non-member menu.
+			if (  ! empty( $instance['nav_menu_non_members'] ) ) {
+				$nav_menu = wp_get_nav_menu_object( $instance['nav_menu_non_members'] );
+			}
 		}
 
-		if ( !$nav_menu )
+		// Find menu for membership ID or give membership menu...
+		if ( empty( $nav_menu ) && ! empty( $level_ids ) ) {
+			// Get levels in priority order.
+			$prioritized_levels = apply_filters( 'pmpronm_prioritize_levels', array() );
+
+			// Add levels that are not prioritized.
+			$prioritized_levels = array_merge( $prioritized_levels, array_diff( $level_ids, $prioritized_levels ) );
+
+			// Search for menu for prioritized levels.
+			foreach ( $prioritized_levels as $prioritized_level_id ) {
+				if ( in_array( $prioritized_level_id, $level_ids ) && ! empty( $instance['nav_menu_members_' . $prioritized_level_id] ) ) {
+					$nav_menu = wp_get_nav_menu_object( $instance['nav_menu_members_' . $prioritized_level_id] );
+					break;
+				}
+			}
+
+			// Give membership menu if no level menu found.
+			if ( empty( $nav_menu ) && ! empty( $instance['nav_menu_members'] ) ) {
+				$nav_menu = wp_get_nav_menu_object( $instance['nav_menu_members'] );
+			}
+		}
+
+		// Give default menu if no membership menu found.
+		if ( empty( $nav_menu ) && ! empty( $instance['nav_menu'] ) ) {
+			$nav_menu = wp_get_nav_menu_object( $instance['nav_menu'] );
+		}
+
+		if ( empty( $nav_menu ) )
 			return;
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */

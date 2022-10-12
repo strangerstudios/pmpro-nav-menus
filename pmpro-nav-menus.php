@@ -97,38 +97,30 @@ function pmpronm_modify_nav_menu_args( $args )
 	//get current user's level ids
 	global $current_user;
 	$levels = pmpro_getMembershipLevelsForUser($current_user->ID);
-	$level_ids = array_map( function( $level ) { return $level->id; }, $levels );
+	$level_ids = wp_list_pluck( $levels, 'id' );
+	$found_menu = false;
 
 	// For logged in non-members...
 	if( is_user_logged_in() && empty( $level_ids ) ) {
 		// Give non-member menu.
 		if ( has_nav_menu( "pmpro-non-members-" . $args['theme_location'] ) ) {
 			$args['theme_location'] = "pmpro-non-members-" . $args['theme_location'];
+			$found_menu = true;
 		}
 	}
 
 	// Find menu for membership ID, or give membership menu...
-	if ( ! empty( $level_ids ) ) {
-		$found_menu = false;
-
-		// Search for memu for prioritized levels.
+	if ( ! $found_menu && ! empty( $level_ids ) ) {
+		// Get levels in priority order.
 		$prioritized_levels = apply_filters( 'pmpronm_prioritize_levels', array() );
+
+		// Add levels that are not prioritized.
+		$prioritized_levels = array_merge( $prioritized_levels, array_diff( $level_ids, $prioritized_levels ) );
 		foreach ( $prioritized_levels as $prioritized_level_id ) {
 			if ( in_array( $prioritized_level_id, $level_ids ) && has_nav_menu("members-" . $prioritized_level_id . "-" . $args['theme_location']) ) {
 				$args['theme_location'] = "members-" . $prioritized_level_id . "-" . $args['theme_location'];
 				$found_menu = true;
 				break;
-			}
-		}
-
-		if ( ! $found_menu ) {
-			// Search for memu for user's other levels.
-			$other_levels = array_diff( $level_ids, $prioritized_levels );
-			foreach ( $other_levels as $other_level_id ) {
-				if ( has_nav_menu("members-" . $other_level_id . "-" . $args['theme_location']) ) {
-					$args['theme_location'] = "members-" . $other_level_id . "-" . $args['theme_location'];
-					$found_menu = true;
-				}
 			}
 		}
 
