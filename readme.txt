@@ -2,7 +2,7 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, members, memberships, navigation, menu, menus
 Requires at least: 3.5
-Tested up to: 5.3.2
+Tested up to: 6.2
 Stable tag: .3.4
 
 Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
