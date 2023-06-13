@@ -81,7 +81,7 @@ function pmpronm_register_my_members_menu() {
 		}
 	}
 }
-add_action( 'init', 'pmpronm_register_my_members_menu', 99 );
+add_action( 'init', 'pmpronm_register_my_members_menu', 15 );
 
 function pmpronm_modify_nav_menu_args( $args )
 {
