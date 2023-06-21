@@ -131,10 +131,15 @@ function pmpronm_modify_nav_menu_args( $args )
 			$args['theme_location'] = 'members-' . $args['theme_location'];
 		}
 	}
-	if( class_exists('sitepress')){$current_lang = apply_filters('wpml_current_language', NULL );
-			$default_lang = apply_filters('wpml_default_language', NULL );do_action('wpml_switch_language', $default_lang );
-			$member_menu_default_lang = get_nav_menu_locations()[$args['theme_location']];$member_menu_current_lang = apply_filters('wpml_object_id', $member_menu_default_lang,'nav_menu',true,'es');
-			do_action('wpml_switch_language', $current_lang );$args['menu']= $member_menu_current_lang;}
+		if ( class_exists ( 'sitepress' ) ) {
+			$current_lang = apply_filters('wpml_current_language', NULL );
+			$default_lang = apply_filters('wpml_default_language', NULL );
+			do_action('wpml_switch_language', $default_lang );
+			$member_menu_default_lang = get_nav_menu_locations()[$args['theme_location']];
+			$member_menu_current_lang = apply_filters('wpml_object_id', $member_menu_default_lang,'nav_menu',true,'es');
+			do_action('wpml_switch_language', $current_lang );
+			$args['menu']= $member_menu_current_lang;
+		}
 
 	return $args;
 }
