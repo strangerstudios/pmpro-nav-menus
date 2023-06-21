@@ -10,7 +10,7 @@ Author URI: https://www.paidmembershipspro.com
 
 function pmpro_nav_menus_widgets_init() {
 	// Make sure PMPro is activated.
-	if ( ! function_exists( 'pmpro_getAllLevels' ) ) {
+	if ( ! defined( 'PMPRO_VERSION' ) ) {
 		return;
 	}
 	/** WP_Nav_Menu_Widget class */
