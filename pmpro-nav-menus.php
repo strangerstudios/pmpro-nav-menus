@@ -35,14 +35,14 @@ function pmpronm_pmpro_membership_level_after_other_settings()
 	else
 		$pmpro_nav_menu = false;
 ?>
-<h3 class="topborder">Navigation Menu</h3>
+<h3 class="topborder"><?php esc_html_e( 'Navigation Menu', 'pmpro-nav-menus' ); ?></h3>
 <table>
 <tbody class="form-table">
 	<tr>
-		<th scope="row" valign="top"><label for="pmpro_nav_menu"><?php _e('Custom Menu:', 'pmpro');?></label></th>
+		<th scope="row" valign="top"><label for="pmpro_nav_menu"><?php esc_html_e('Custom Menu:', 'pmpro-nav-menus');?></label></th>
 		<td>
 			<input type="checkbox" id="pmpro_nav_menu" name="pmpro_nav_menu" value="1" <?php checked($pmpro_nav_menu, 1);?> />
-			<label for="pmpro_nav_menu"><?php _e('Check this if you want to create unique navigation menus for this level.', 'pmpro');?></label>
+			<label for="pmpro_nav_menu"><?php esc_html_e('Check this if you want to create unique navigation menus for this level.', 'pmpro-nav-menus');?></label>
 		</td>
 	</tr>
 </tbody>
@@ -82,7 +82,7 @@ function pmpronm_register_my_members_menu() {
 			$level_nav_menu = get_option('pmpro_nav_menu_hidden_level_' . $level->id, false);
 			if(!empty($level_nav_menu))
 			{
-				register_nav_menu( 'members-' . $level->id . '-' . $location, __( $description . ' - ' . $level->name . ' Members', 'pmpro' ) );
+				register_nav_menu( 'members-' . $level->id . '-' . $location, __( $description . ' - ' . $level->name . ' Members', 'pmpro-nav-menus' ) );
 			}
 		}
 	}
@@ -146,8 +146,8 @@ function pmpronm_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-nav-menus.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro-nav-menus' ) ) . '">' . __( 'Docs', 'pmpro-nav-menus' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro-nav-menus' ) ) . '">' . __( 'Support', 'pmpro-nav-menus' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
 	}
