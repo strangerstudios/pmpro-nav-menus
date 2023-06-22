@@ -1,9 +1,9 @@
 === Paid Memberships Pro: Nav Menus Add On ===
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, members, memberships, navigation, menu, menus
-Requires at least: 3.5
-Tested up to: 5.3.2
-Stable tag: .3.4
+Requires at least: 5.0
+Tested up to: 6.2
+Stable tag: 0.4
 
 Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
 
@@ -23,6 +23,13 @@ If you do not set a Menu for a member-specific Theme Location, the menu will fal
 1. Create new navigation menu(s) for your members and assign them to the appropriate Theme Location.
 
 == Changelog == 
+= 0.4 - 2023-06-22 =
+* ENHANCEMENT: Added support for Multiple Memberships Per User. Use the filter `pmpronm_prioritize_levels` (array of level ID's) to give priority to a specific membership level. (@dparker1005)
+* ENHANCEMENT: Added localization support. (@femiyb, @andrewlimaza)
+* ENHANCEMENT/BUG FIX: Improved functionality for the new Block Editor for widgets (@andrewlimaza)
+* BUG FIX: Fixed a fatal error when Paid Memberships Pro was deactivated. (@dparker1005)
+* BUG FIX: Loaded Nav Menu functionality later than default but sooner than most other themes and plugins to help improve compatibility. (@JarrydLong)
+
 = .3.4 - 2020-03-17 =
 * BUG FIX: Fixed issue where logged-in non-members would not see correct menu
 * ENHANCEMENT: Added pmpronm_prioritize_levels filter for MMPU compatibility

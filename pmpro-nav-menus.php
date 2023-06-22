@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Nav Menus Add On
 Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/
 Description: Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
-Version: .3.4
+Version: 0.4
 Author: Stranger Studios
 Author URI: https://www.paidmembershipspro.com
 */
