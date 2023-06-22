@@ -17,6 +17,9 @@ function pmpro_nav_menus_widgets_init() {
 	$path = dirname(__FILE__);
 	require_once($path . "/widgets/class-pmpro-nav-menu-widget.php");
 	register_widget('PMPro_Nav_Menu_Widget');
+
+	wp_enqueue_script( 'pmpro-nav-menu-block-widget', plugins_url( '/widgets/block-widget.js', __FILE__ ), array( 'jquery' ) );
+
 }
 add_action( 'widgets_init', 'pmpro_nav_menus_widgets_init' );
 
