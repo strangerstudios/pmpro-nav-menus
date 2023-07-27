@@ -35,7 +35,7 @@ function pmpronm_pmpro_membership_level_after_other_settings()
 	else
 		$pmpro_nav_menu = false;
 ?>
-<h3 class="topborder"><?php esc_html_e( 'Navigation Menu', 'pmpro-nav-menus' ); ?></h3>
+<h2 class="topborder"><?php esc_html_e( 'Navigation Menu', 'pmpro-nav-menus' ); ?></h2>
 <table>
 <tbody class="form-table">
 	<tr>
