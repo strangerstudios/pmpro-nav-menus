@@ -36,6 +36,12 @@ function pmpronm_pmpro_membership_level_after_other_settings()
 		$pmpro_nav_menu = false;
 ?>
 <h3 class="topborder"><?php esc_html_e( 'Navigation Menu', 'pmpro-nav-menus' ); ?></h3>
+<p>
+	<?php
+	$nav_menus_link = '<a title="' . esc_attr__( 'Nav Menus Add On', 'pmpro-nav-menus' ) . '" target="_blank" rel="nofollow noopener" href="https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/?utm_source=plugin&utm_medium=pmpro-nav-menus&utm_campaign=add-ons&utm_content=&utm_term=">' . esc_html__( 'Navigation Menus', 'pmpro-nav-menus' ) . '</a>';
+	printf( esc_html__( 'Learn more about %s.', 'pmpro-nav-menus' ), $nav_menus_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+</p>
 <table>
 <tbody class="form-table">
 	<tr>
