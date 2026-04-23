@@ -35,17 +35,24 @@ function pmpronm_pmpro_membership_level_after_other_settings()
 	else
 		$pmpro_nav_menu = false;
 ?>
-<h3 class="topborder"><?php esc_html_e( 'Navigation Menu', 'pmpro-nav-menus' ); ?></h3>
-<table>
-<tbody class="form-table">
-	<tr>
-		<th scope="row" valign="top"><label for="pmpro_nav_menu"><?php esc_html_e('Custom Menu:', 'pmpro-nav-menus');?></label></th>
-		<td>
-			<input type="checkbox" id="pmpro_nav_menu" name="pmpro_nav_menu" value="1" <?php checked($pmpro_nav_menu, 1);?> />
-			<label for="pmpro_nav_menu"><?php esc_html_e('Check this if you want to create unique navigation menus for this level.', 'pmpro-nav-menus');?></label>
-		</td>
-	</tr>
-</tbody>
+<hr />
+<h2><?php esc_html_e( 'Navigation Menu', 'pmpro-nav-menus' ); ?></h2>
+<p>
+	<?php
+	$nav_menus_link = '<a title="' . esc_attr__( 'Nav Menus Add On Documentation', 'pmpro-nav-menus' ) . '" target="_blank" rel="nofollow noopener" href="https://www.paidmembershipspro.com/add-ons/pmpro-nav-menus/?utm_source=plugin&utm_medium=pmpro-nav-menus&utm_campaign=add-ons">' . esc_html__( 'Navigation Menus', 'pmpro-nav-menus' ) . '</a>';
+	printf( esc_html__( 'Learn more about %s.', 'pmpro-nav-menus' ), $nav_menus_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+</p>
+<table class="form-table">
+	<tbody>
+		<tr>
+			<th scope="row" valign="top"><label for="pmpro_nav_menu"><?php esc_html_e('Custom Menu', 'pmpro-nav-menus');?></label></th>
+			<td>
+				<input type="checkbox" id="pmpro_nav_menu" name="pmpro_nav_menu" value="1" <?php checked($pmpro_nav_menu, 1);?> />
+				<label for="pmpro_nav_menu"><?php esc_html_e('Check this if you want to create unique navigation menus for this level.', 'pmpro-nav-menus');?></label>
+			</td>
+		</tr>
+	</tbody>
 </table>
 <?php
 }
