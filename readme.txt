@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, members, memberships, navigation, menu, menus
 Requires at least: 5.0
-Tested up to: 6.2
-Stable tag: 0.4
+Tested up to: 6.9
+Stable tag: 0.4.1
 
 Creates member navigation menus and swaps your theme's navigation based on a user's Membership Level
 
@@ -22,7 +22,10 @@ If you do not set a Menu for a member-specific Theme Location, the menu will fal
 1. Optionally create level-specific navigation menus on the `Edit Membership Level` admin.
 1. Create new navigation menu(s) for your members and assign them to the appropriate Theme Location.
 
-== Changelog == 
+== Changelog ==
+= 0.4.1 - 2026-04-23 =
+* ENHANCEMENT: Added a link to documentation and updated formatting of the Navigation Menu section on the Edit Membership Level screen. #29 (@kimcoleman)
+
 = 0.4 - 2023-06-22 =
 * ENHANCEMENT: Added support for Multiple Memberships Per User. Use the filter `pmpronm_prioritize_levels` (array of level ID's) to give priority to a specific membership level. (@dparker1005)
 * ENHANCEMENT: Added localization support. (@femiyb, @andrewlimaza)
