@@ -8,6 +8,10 @@ Author: Stranger Studios
 Author URI: https://www.paidmembershipspro.com
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function pmpro_nav_menus_widgets_init() {
 	// Make sure PMPro is activated.
 	if ( ! defined( 'PMPRO_VERSION' ) ) {
@@ -29,7 +33,7 @@ add_action( 'widgets_init', 'pmpro_nav_menus_widgets_init' );
 //show the checkbox on the edit level page
 function pmpronm_pmpro_membership_level_after_other_settings()
 {	
-	$level_id = intval($_REQUEST['edit']);
+	$level_id = isset( $_REQUEST['edit'] ) ? intval( $_REQUEST['edit'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: level ID used to display the setting on the PMPro edit level page.
 	if($level_id > 0)
 		$pmpro_nav_menu = get_option('pmpro_nav_menu_hidden_level_' . $level_id);	
 	else
@@ -61,10 +65,12 @@ add_action('pmpro_membership_level_after_other_settings', 'pmpronm_pmpro_members
 //save navigation menu setting when the level is saved/added
 function pmpronm_pmpro_save_membership_level($level_id)
 {
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Nonce and capability verified by PMPro before pmpro_save_membership_level fires (adminpages/membershiplevels.php check_admin_referer).
 	if(isset($_REQUEST['pmpro_nav_menu']))
 		$pmpro_nav_menu = intval($_REQUEST['pmpro_nav_menu']);
 	else
 		$pmpro_nav_menu = 0;
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
 	update_option('pmpro_nav_menu_hidden_level_' . $level_id, $pmpro_nav_menu);
 }
 add_action("pmpro_save_membership_level", "pmpronm_pmpro_save_membership_level");
