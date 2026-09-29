@@ -74,10 +74,10 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
-		echo $args['before_widget'];
+		echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme-registered sidebar markup, output raw like core widgets.
 
 		if ( !empty($instance['title']) )
-			echo $args['before_title'] . $instance['title'] . $args['after_title'];
+			echo $args['before_title'] . $instance['title'] . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme-registered title wrappers; title is sanitize_text_field() on save and filtered by widget_title, matching core WP_Nav_Menu_Widget.
 
 		$nav_menu_args = array(
 			'fallback_cb' => '',
@@ -102,7 +102,7 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 		 */
 		wp_nav_menu( apply_filters( 'widget_pmpro_nav_menu_args', $nav_menu_args, $nav_menu, $args, $instance ) );
 
-		echo $args['after_widget'];
+		echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme-registered sidebar markup, output raw like core widgets.
 	}
 
 	/**
@@ -177,17 +177,17 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 				$url = admin_url( 'nav-menus.php' );
 			}
 			?>
-			<?php echo sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.', 'pmpro-nav-menus' ), esc_attr( $url ) ); ?>
+			<?php echo sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.', 'pmpro-nav-menus' ), esc_attr( $url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Translatable string contains intended link markup; URL escaped with esc_attr() (esc_url() would strip the Customizer javascript: URL), matching core WP_Nav_Menu_Widget. ?>
 		</p>
 		<div class="nav-menu-widget-form-controls" <?php if ( empty( $menus ) ) { echo ' style="display:none" '; } ?>>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ) ?></label>
-				<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:' ) ?></label>
+				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_menu' ); ?>"><?php _e( 'Default Menu:' ); ?></label>
-				<select id="<?php echo $this->get_field_id( 'nav_menu' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu' ); ?>">
-					<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'nav_menu' ) ); ?>"><?php esc_html_e( 'Default Menu:' ); ?></label>
+				<select id="<?php echo esc_attr( $this->get_field_id( 'nav_menu' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'nav_menu' ) ); ?>">
+					<option value="0"><?php esc_html_e( '&mdash; Select &mdash;' ); ?></option>
 					<?php foreach ( $menus as $menu ) : ?>
 						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu, $menu->term_id ); ?>>
 							<?php echo esc_html( $menu->name ); ?>
@@ -196,9 +196,9 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 				</select>
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_menu_members' ); ?>"><?php _e( 'Members Menu:' ); ?></label>
-				<select id="<?php echo $this->get_field_id( 'nav_menu_members' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_members' ); ?>">
-					<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'nav_menu_members' ) ); ?>"><?php esc_html_e( 'Members Menu:' ); ?></label>
+				<select id="<?php echo esc_attr( $this->get_field_id( 'nav_menu_members' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'nav_menu_members' ) ); ?>">
+					<option value="0"><?php esc_html_e( '&mdash; Select &mdash;' ); ?></option>
 					<?php foreach ( $menus as $menu ) : ?>
 						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu_members, $menu->term_id ); ?>>
 							<?php echo esc_html( $menu->name ); ?>
@@ -207,8 +207,8 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 				</select>
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_menu_non_members' ); ?>"><?php esc_html_e( 'Logged-in Non-member Menu:', 'pmpro-nav-menus' ); ?></label>
-				<select id="<?php echo $this->get_field_id( 'nav_menu_non_members' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_non_members' ); ?>">
+				<label for="<?php echo esc_attr( $this->get_field_id( 'nav_menu_non_members' ) ); ?>"><?php esc_html_e( 'Logged-in Non-member Menu:', 'pmpro-nav-menus' ); ?></label>
+				<select id="<?php echo esc_attr( $this->get_field_id( 'nav_menu_non_members' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'nav_menu_non_members' ) ); ?>">
 					<option value="0"><?php echo '&mdash; ' . esc_html( 'Select' ) . ' &mdash;'; ?></option>
 					<?php foreach ( $menus as $menu ) : ?>
 						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu_non_members, $menu->term_id ); ?>>
@@ -245,9 +245,9 @@ class PMPro_Nav_Menu_Widget extends WP_Widget {
 							$selected_menu = false;
 						?>
 						<p>
-							<label for="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id); ?>"><?php echo sprintf( esc_html( '%s Menu:', 'pmpro-nav-menus' ), $level->name ); ?></label>
-							<select id="<?php echo $this->get_field_id( 'nav_menu_members_' . $level->id ); ?>" name="<?php echo $this->get_field_name( 'nav_menu_members_' . $level->id ); ?>">
-								<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
+							<label for="<?php echo esc_attr( $this->get_field_id( 'nav_menu_members_' . $level->id ) ); ?>"><?php echo sprintf( esc_html( '%s Menu:', 'pmpro-nav-menus' ), esc_html( $level->name ) ); ?></label>
+							<select id="<?php echo esc_attr( $this->get_field_id( 'nav_menu_members_' . $level->id ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'nav_menu_members_' . $level->id ) ); ?>">
+								<option value="0"><?php esc_html_e( '&mdash; Select &mdash;' ); ?></option>
 								<?php foreach ( $menus as $menu ) : ?>
 									<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $selected_menu, $menu->term_id ); ?>>
 										<?php echo esc_html( $menu->name ); ?>
