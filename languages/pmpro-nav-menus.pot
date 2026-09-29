@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Paid Memberships Pro - Nav Menus Add On plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Paid Memberships Pro - Nav Menus Add On 0.4.1\n"
+"Project-Id-Version: Paid Memberships Pro - Nav Menus Add On 0.4.2\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
 "Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-23T15:51:40+00:00\n"
+"POT-Creation-Date: 2026-09-29T15:35:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pmpro-nav-menus\n"
@@ -39,44 +39,44 @@ msgstr ""
 msgid "https://www.paidmembershipspro.com"
 msgstr ""
 
-#: pmpro-nav-menus.php:39
+#: pmpro-nav-menus.php:43
 msgid "Navigation Menu"
 msgstr ""
 
-#: pmpro-nav-menus.php:42
+#: pmpro-nav-menus.php:46
 msgid "Nav Menus Add On Documentation"
 msgstr ""
 
-#: pmpro-nav-menus.php:42
+#: pmpro-nav-menus.php:46
 msgid "Navigation Menus"
 msgstr ""
 
-#: pmpro-nav-menus.php:43
+#: pmpro-nav-menus.php:47
 #, php-format
 msgid "Learn more about %s."
 msgstr ""
 
-#: pmpro-nav-menus.php:49
+#: pmpro-nav-menus.php:53
 msgid "Custom Menu"
 msgstr ""
 
-#: pmpro-nav-menus.php:52
+#: pmpro-nav-menus.php:56
 msgid "Check this if you want to create unique navigation menus for this level."
 msgstr ""
 
-#: pmpro-nav-menus.php:156
+#: pmpro-nav-menus.php:162
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-nav-menus.php:156
+#: pmpro-nav-menus.php:162
 msgid "Docs"
 msgstr ""
 
-#: pmpro-nav-menus.php:157
+#: pmpro-nav-menus.php:163
 msgid "Visit Customer Support Forum"
 msgstr ""
 
-#: pmpro-nav-menus.php:157
+#: pmpro-nav-menus.php:163
 msgid "Support"
 msgstr ""
 
